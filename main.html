@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8. Infinite Carousel</title>
+  <style>
+    .carousel { max-width: 800px; margin: 40px auto; overflow: hidden; position: relative; }
+    .slides { display: flex; transition: transform 0.5s ease; }
+    .slide { min-width: 100%; height: 400px; }
+    .slide img { width: 100%; height: 100%; object-fit: cover; }
+    button { position: absolute; top: 50%; padding: 15px; background: rgba(0,0,0,0.5); color: white; border: none; cursor: pointer; }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+  </style>
+</head>
+<body>
+  <div class="carousel">
+    <div class="slides" id="slides">
+      <!-- JS orqali to'ldiriladi -->
+    </div>
+    <button class="prev" onclick="prevSlide()">‹</button>
+    <button class="next" onclick="nextSlide()">›</button>
+  </div>
+
+  <script>
+    const images = [
+      "https://picsum.photos/id/1015/800/400",
+      "https://picsum.photos/id/237/800/400",
+      "https://picsum.photos/id/870/800/400"
+    ];
+    let current = 0;
+
+    const slidesContainer = document.getElementById('slides');
+    images.forEach(src => {
+      const img = document.createElement('div');
+      img.className = 'slide';
+      img.innerHTML = `<img src="${src}" alt="slide">`;
+      slidesContainer.appendChild(img);
+    });
+
+    function showSlide() {
+      slidesContainer.style.transform = `translateX(-${current * 100}%)`;
+    }
+
+    function nextSlide() {
+      current = (current + 1) % images.length;
+      showSlide();
+    }
+
+    function prevSlide() {
+      current = (current - 1 + images.length) % images.length;
+      showSlide();
+    }
+
+    // Avto play
+    setInterval(nextSlide, 4000);
+  </script>
+</body>
+</html>
